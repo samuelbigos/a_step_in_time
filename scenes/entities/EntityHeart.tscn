@@ -7,7 +7,7 @@
 "heart",
 ]]
 script = ExtResource( 2 )
-canMove = true
+CanMove = true
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

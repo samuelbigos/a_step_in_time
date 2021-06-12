@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/entities/EntityWall.gd"
 }, {
+"base": "Node2D",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://src/Grid.gd"
+}, {
 "base": "Resource",
 "class": "SaveGame",
 "language": "GDScript",
@@ -45,6 +50,7 @@ _global_script_class_icons={
 "EntityMeta": "",
 "EntityPlayer": "",
 "EntityWall": "",
+"Grid": "",
 "SaveGame": ""
 }
 

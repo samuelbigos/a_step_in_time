@@ -11,7 +11,7 @@ func _init():
 	
 func _do_create_new():
 	_data["current_level"] = 0
-	_data["unlocked_level"] = 0
+	_data["unlocked_level"] = 10
 
 func reset():
 	_do_create_new()

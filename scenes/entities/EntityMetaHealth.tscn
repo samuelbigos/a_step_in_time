@@ -5,7 +5,7 @@
 
 [node name="EntityMetaHealth" type="Area2D"]
 script = ExtResource( 2 )
-canMove = true
+CanMove = true
 metaType = 2
 
 [node name="Sprite" type="Sprite" parent="."]

@@ -5,7 +5,7 @@
 
 [node name="EntityMetaMoves" type="Area2D"]
 script = ExtResource( 2 )
-canMove = true
+CanMove = true
 metaType = 4
 
 [node name="Sprite" type="Sprite" parent="."]
