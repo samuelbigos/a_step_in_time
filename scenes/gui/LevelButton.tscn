@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/font/fibberish.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/gui/level_button.png" type="Texture" id=2]
+[ext_resource path="res://src/gui/LevelButton.gd" type="Script" id=3]
+[ext_resource path="res://assets/gui/level_lock.png" type="Texture" id=4]
+
+[node name="TextureButton" type="TextureButton"]
+margin_right = 32.0
+margin_bottom = 32.0
+texture_normal = ExtResource( 2 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )
+mouse_filter = 1
+custom_fonts/font = ExtResource( 1 )
+text = "1"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lock" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="." to="." method="_on_TextureButton_pressed"]

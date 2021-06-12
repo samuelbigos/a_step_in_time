@@ -3,11 +3,13 @@ class_name EntityBase
 
 export var canMove:= false
 
+onready var _sprite = get_node("Sprite")
+
 var _pendingMove: Vector2
 var _gridPos: Vector2
 
 var grid: Object
-var key: int
+var key = ""
 
 
 func getDesiredMove():
@@ -17,7 +19,7 @@ func stepBegin():
 	pass
 	
 func stepEnd():
-	_pendingMove = Vector2()	
+	_pendingMove = Vector2()
 	
 func move(newGridPos: Vector2):
 	_gridPos = newGridPos

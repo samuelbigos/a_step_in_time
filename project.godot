@@ -17,7 +17,12 @@ _global_script_classes=[ {
 "base": "EntityBase",
 "class": "EntityBlock",
 "language": "GDScript",
-"path": "res://src/EntityWall.gd"
+"path": "res://src/EntityBlock.gd"
+}, {
+"base": "EntityBase",
+"class": "EntityMeta",
+"language": "GDScript",
+"path": "res://src/EntityMeta.gd"
 }, {
 "base": "EntityBase",
 "class": "EntityPlayer",
@@ -27,27 +32,41 @@ _global_script_classes=[ {
 "base": "EntityBase",
 "class": "EntityWall",
 "language": "GDScript",
-"path": "res://src/EntityBlock.gd"
+"path": "res://src/EntityWall.gd"
+}, {
+"base": "Resource",
+"class": "SaveGame",
+"language": "GDScript",
+"path": "res://src/SaveGame.gd"
 } ]
 _global_script_class_icons={
 "EntityBase": "",
 "EntityBlock": "",
+"EntityMeta": "",
 "EntityPlayer": "",
-"EntityWall": ""
+"EntityWall": "",
+"SaveGame": ""
 }
 
 [application]
 
 config/name="GMTK21"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://scenes/gui/ScreenLevelSelect.tscn"
 config/icon="res://icon.png"
+config/save_version=0
+
+[autoload]
+
+SaveManager="*res://src/SaveManager.gd"
+PlayerData="*res://src/PlayerData.gd"
+Globals="*res://src/Globals.gd"
 
 [display]
 
 window/size/width=480
-window/size/height=270
+window/size/height=256
 window/size/test_width=960
-window/size/test_height=540
+window/size/test_height=512
 window/stretch/mode="viewport"
 
 [input]

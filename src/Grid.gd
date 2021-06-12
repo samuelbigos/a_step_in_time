@@ -1,20 +1,17 @@
 extends Node2D
 
-export var GridKeys = {}
 export var GridCellSize := 16
 
-var level1 = [
-	[2,2,2,2,2,2,2,2,2,2],
-	[2,0,0,0,0,0,0,0,0,2],
-	[2,0,0,0,0,0,0,0,0,2],
-	[2,0,0,1,0,0,0,0,0,2],
-	[2,0,0,0,0,0,0,0,0,2],
-	[2,0,0,0,0,0,3,0,0,2],
-	[2,0,0,0,0,0,0,0,0,2],
-	[2,0,0,0,0,0,0,0,0,2],
-	[2,2,2,2,2,2,2,2,2,2],
-]
+const KEY_EMPTY = " "
+const KEY_PLAYER = "P"
+const KEY_WALL = "#"
+const KEY_BLOCK = "B"
+const KEY_HEART = "3"
+const KEY_X = "X"
+const KEY_Y = "Y"
 
+var _gridKeys = {}
+var _keyPrio = {}
 var _gridHeight: int
 var _gridWidth: int
 var _origin: Vector2
@@ -22,31 +19,65 @@ var _gridEntities = {}
 
 
 func _ready():
-	var level = level1
+	_gridKeys[KEY_EMPTY] = null
+	_keyPrio[0] = KEY_EMPTY
+	
+	_gridKeys[KEY_PLAYER] = load("res://scenes/entities/EntityPlayer.tscn")
+	_keyPrio[1] = KEY_PLAYER
+	
+	_gridKeys[KEY_WALL] = load("res://scenes/entities/EntityWall.tscn")
+	_keyPrio[2] = KEY_WALL
+	
+	_gridKeys[KEY_BLOCK] = load("res://scenes/entities/EntityBlock.tscn")
+	_keyPrio[3] = KEY_BLOCK
+	
+	_gridKeys[KEY_HEART] = load("res://scenes/entities/EntityHeart.tscn")
+	_keyPrio[4] = KEY_HEART
+	
+	_gridKeys[KEY_X] = load("res://scenes/entities/EntityMetaX.tscn")
+	_keyPrio[5] = KEY_X
+	
+	_gridKeys[KEY_Y] = load("res://scenes/entities/EntityMetaY.tscn")
+	_keyPrio[6] = KEY_Y
+	
+	var level = Globals.Levels[PlayerData.get("current_level")]
 	
 	_gridHeight = level.size()
-	_gridWidth = level[0].size()
+	_gridWidth = level[0].length()
 	_origin = get_viewport_rect().size * 0.5 - Vector2(_gridWidth, _gridHeight) * 0.5 * GridCellSize
+	_origin += Vector2(GridCellSize, GridCellSize) * 0.5
 	for y in range(0, _gridHeight):
 		for x in range(0, _gridWidth):
-			var key = level[y][x]
 			var gridPos = Vector2(x, y)
-			if key != 0:
-				var entity = GridKeys[level[y][x]].instance()
+			var key = level[y][x]
+			var entityScene = _gridKeys[key]
+			if entityScene:
+				var entity = entityScene.instance()
 				add_child(entity)
-				entity.global_position = _origin + Vector2(x, y) * GridCellSize
 				_gridEntities[gridPos] = entity
 				entity.grid = self
 				entity.key = key
+				entity.move(gridPos)
 			else:
 				_gridEntities[gridPos] = null
 				
+func getKey(level, pos: Vector2):
+	var row = level[pos.y]
+	var key = row[pos.x]
+				
 func step():
+	for y in range(0, _gridHeight):
+		for x in range(0, _gridWidth):
+			var gridPos = Vector2(x, y)
+			var entity = _gridEntities[gridPos]
+			if entity:
+				entity.stepBegin()
+				
 	# process entities in order of priority, using key to define priority
 	# this allows a defined order of operations when processing the step, i.e.
 	# player will block other entities when moving into the same square
-	for i in range(0, GridKeys.size()):
-		var key = i + 1
+	for i in range(0, _keyPrio.size()):
+		var key = _keyPrio[i]
 	
 		for y in range(0, _gridHeight):
 			for x in range(0, _gridWidth):
@@ -55,8 +86,7 @@ func step():
 				
 				if not entity or entity.key != key:
 					continue
-					
-				entity.stepBegin()
+				
 				var move = entity.getDesiredMove()
 				_move(entity, gridPos, move, 0)
 				entity.stepEnd()
@@ -69,7 +99,8 @@ func step():
 			var entity = _gridEntities[gridPos]
 			if entity:
 				entity.move(gridPos)
-				line = line + "%d" % entity.key
+				entity.stepEnd()
+				line = line + "%s" % entity.key
 			else:
 				line = line + "0"
 		print(line)
@@ -79,6 +110,10 @@ func _move(entity: Object, gridPos: Vector2, move: Vector2, depth: int) -> bool:
 		return false
 		
 	var targetGridPos = gridPos + move
+	if (targetGridPos.x < 0 or targetGridPos.x >= _gridWidth or 
+		targetGridPos.y < 0 or targetGridPos.y >= _gridHeight):
+		return false
+	
 	var targetEntity = _gridEntities[targetGridPos]
 		
 	if not targetEntity:
@@ -96,3 +131,6 @@ func _move(entity: Object, gridPos: Vector2, move: Vector2, depth: int) -> bool:
 
 func gridToWorld(gridPos: Vector2) -> Vector2:
 	return _origin + gridPos * GridCellSize
+
+func getAt(gridPos: Vector2):
+	return _gridEntities[gridPos]

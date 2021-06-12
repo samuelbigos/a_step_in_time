@@ -1,5 +1,5 @@
 extends EntityBase
-class_name EntityWall
+class_name EntityBlock
 
 
 func _ready():
