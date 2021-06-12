@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://src/EntityBase.gd"
 }, {
 "base": "EntityBase",
+"class": "EntityBlock",
+"language": "GDScript",
+"path": "res://src/EntityWall.gd"
+}, {
+"base": "EntityBase",
 "class": "EntityPlayer",
 "language": "GDScript",
 "path": "res://src/EntityPlayer.gd"
@@ -22,10 +27,11 @@ _global_script_classes=[ {
 "base": "EntityBase",
 "class": "EntityWall",
 "language": "GDScript",
-"path": "res://src/EntityWall.gd"
+"path": "res://src/EntityBlock.gd"
 } ]
 _global_script_class_icons={
 "EntityBase": "",
+"EntityBlock": "",
 "EntityPlayer": "",
 "EntityWall": ""
 }
