@@ -5,7 +5,7 @@ var SAVE_FOLDER = "user://savegame.save"
 var SAVE_FORMAT = "save_%03d.tres"
 
 func _ready():
-	pass
+	do_load()
 
 func do_save():
 	var id = ProjectSettings.get_setting("application/config/save_version")

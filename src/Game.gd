@@ -15,4 +15,15 @@ func _process(delta):
 		step = true
 		
 	if step:
-		_grid.step()
+		var player = get_tree().get_nodes_in_group("player")[0]
+		var goal = get_tree().get_nodes_in_group("goal")[0]
+		
+		var playerMove = player.getGridPos() + player.getDesiredMove()
+		if goal._gridPos == playerMove:
+			_completeLevel()
+		else:
+			_grid.step()
+
+func _completeLevel():
+	PlayerData.completeCurrentLevel()
+	get_tree().reload_current_scene()

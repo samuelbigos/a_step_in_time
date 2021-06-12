@@ -4,6 +4,7 @@ export var GridCellSize := 16
 
 const KEY_EMPTY = " "
 const KEY_PLAYER = "P"
+const KEY_GOAL = "G"
 const KEY_WALL = "#"
 const KEY_BLOCK = "B"
 const KEY_HEART = "3"
@@ -16,7 +17,6 @@ var _gridHeight: int
 var _gridWidth: int
 var _origin: Vector2
 var _gridEntities = {}
-
 
 func _ready():
 	_gridKeys[KEY_EMPTY] = null
@@ -40,7 +40,11 @@ func _ready():
 	_gridKeys[KEY_Y] = load("res://scenes/entities/EntityMetaY.tscn")
 	_keyPrio[6] = KEY_Y
 	
-	var level = Globals.Levels[PlayerData.get("current_level")]
+	_gridKeys[KEY_GOAL] = load("res://scenes/entities/EntityGoal.tscn")
+	_keyPrio[7] = KEY_GOAL
+	
+	var currentLevel = PlayerData.get("current_level")
+	var level = Globals.Levels[currentLevel]
 	
 	_gridHeight = level.size()
 	_gridWidth = level[0].length()

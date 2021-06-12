@@ -11,9 +11,8 @@ var _gridPos: Vector2
 var grid: Object
 var key = ""
 
-
-func getDesiredMove():
-	return _pendingMove
+func getGridPos(): return _gridPos
+func getDesiredMove(): return _pendingMove
 	
 func stepBegin():
 	pass

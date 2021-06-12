@@ -10,8 +10,8 @@ func _init():
 	_do_create_new()
 	
 func _do_create_new():
-	_data["current_level"] = 1
-	_data["unlocked_level"] = 1
+	_data["current_level"] = 0
+	_data["unlocked_level"] = 0
 
 func reset():
 	_do_create_new()
@@ -23,8 +23,9 @@ func set(key, value):
 	_data[key] = value
 	SaveManager.do_save()
 
-func complete_level(level):
-	_data["unlocked_level"] = max(level, _data["unlocked_level"])
+func completeCurrentLevel():
+	_data["current_level"] = _data["current_level"] + 1
+	_data["unlocked_level"] = max(_data["current_level"], _data["unlocked_level"])
 	SaveManager.do_save()
 	
 func do_save():
@@ -36,4 +37,4 @@ func do_save():
 	
 func do_load(save_data : Dictionary):
 	_do_create_new()
-	_data = save_data["data"].duplicate(true)
+	#_data = save_data["data"].duplicate(true)

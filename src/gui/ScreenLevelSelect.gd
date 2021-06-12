@@ -9,10 +9,10 @@ func _ready():
 		var button = LevelButton.instance()
 		$CenterContainer/GridContainer.add_child(button)
 		
-		var unlocked =  i < PlayerData.get("unlocked_level")
+		var unlocked = i <= PlayerData.get("unlocked_level")
 		button.setup(i, unlocked)
 		button.connect("onPressed", self, "onLevelButtonPressed")
 		
 func onLevelButtonPressed(button):
-	PlayerData.set("current_level", button.id - 1)
+	PlayerData.set("current_level", button.id)
 	get_tree().change_scene_to(GameScene)
