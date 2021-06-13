@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/entities/EntityBot.gd" type="Script" id=1]
+[ext_resource path="res://assets/bot.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 4.0
+} ]
+
+[node name="EntityBot" type="Area2D" groups=[
+"wall",
+]]
+modulate = Color( 0.654902, 0.654902, 0.619608, 1 )
+script = ExtResource( 1 )
+CanMove = true
+Temporal = true
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 7 )
+frame = 3
+playing = true

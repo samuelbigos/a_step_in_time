@@ -11,7 +11,8 @@ func _init():
 	
 func _do_create_new():
 	_data["current_level"] = 0
-	_data["unlocked_level"] = 10
+	_data["unlocked_level"] = 0
+	_data["next_screen"] = "game"
 
 func reset():
 	_do_create_new()
@@ -37,4 +38,4 @@ func do_save():
 	
 func do_load(save_data : Dictionary):
 	_do_create_new()
-	#_data = save_data["data"].duplicate(true)
+	_data = save_data["data"].duplicate(true)

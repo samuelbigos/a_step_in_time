@@ -4,6 +4,7 @@ class_name EntityBase
 export var PlayerMovable:= true
 export var CanMove:= false
 export var Traversible:= false
+export var Temporal:= false
 export var Damage:= 0
 export var Animate:= false
 export var MoveAnimTime = 0.125
@@ -19,9 +20,12 @@ var _gridPos: Vector2
 var _destroyed:= false
 var _destroyTimer = 1.0
 var _animTimer = 0.0
+var _moveSFX = AudioStreamPlayer.new()
 
+var game: Object
 var grid: Object
 var key = ""
+var positionStack = []
 
 func getGridPos(): return _gridPos
 func getDesiredMove(): return _pendingMove
@@ -45,8 +49,12 @@ func move(newGridPos: Vector2):
 		if abs(moveDelta.x) > 0:
 			_sprite.flip_h = moveDelta.x < 0
 			
+		if key != "P" and key != "W":
+			_moveSFX.play()
+			
 	updateWorldPos(_gridPos)
 	_gridPos = newGridPos
+	positionStack.append(_gridPos)	
 	
 func updateWorldPos(gridPos):
 	global_position = grid.gridToWorld(gridPos)
@@ -55,6 +63,8 @@ func destroy():
 	_destroyed = true
 	_sprite.visible = false
 	queue_free()
+	if key != "P" and key != "m":
+		game.playDestroySFX()
 	
 func _ready():
 	var shape = RectangleShape2D.new()
@@ -64,6 +74,10 @@ func _ready():
 	shape_owner_add_shape(shapeOwner, shape)
 	add_to_group("entity")
 	z_index = -1
+	add_child(_moveSFX)
+	_moveSFX.stream = load("res://assets/sfx/push.wav")
+	_moveSFX.volume_db = -5	
+	game = get_tree().get_nodes_in_group("game")[0]
 
 func _process(delta):
 	if Animate:

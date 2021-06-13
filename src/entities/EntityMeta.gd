@@ -17,11 +17,16 @@ var connectedTo = []
 var _baseCol = Color("a7a79e")
 var _activeCol = Color("caa05a")
 var _shakeTimer = 0.0
+var _connected = false
+var _sfxConnect = AudioStreamPlayer.new()
 
 
 func _ready():
 	add_to_group("meta")
 	modulate = _baseCol
+	add_child(_sfxConnect)
+	_sfxConnect.stream = load("res://assets/sfx/on_connected.wav")
+	_sfxConnect.volume_db = -10
 
 func _process(delta):
 	if connectedTo.size() > 0:
@@ -29,10 +34,14 @@ func _process(delta):
 		var s = sin(_shakeTimer) * 0.1 + 1.0
 		_sprite.scale = Vector2(s, s)
 		_sprite.rotation = sin(_shakeTimer * 2.0) * 0.125
+		if not _connected:
+			_connected = true
+			_sfxConnect.play()
 	else:
 		var s = 1.0
 		_sprite.scale = Vector2(s, s)
 		_sprite.rotation = 0.0
+		_connected = false
 	
 func stepEnd():
 	.stepEnd()

@@ -1,8 +1,8 @@
 extends Node2D
 
-export var Decay = 5.0  # How quickly the shaking stops [0, 1].
-export var MaxOffset = Vector2(0.03, 0.03)  # Maximum hor/ver shake in pixels.
-export var MaxRoll = 0.1  # Maximum rotation in radians (use sparingly).
+export var Decay = 3.5  # How quickly the shaking stops [0, 1].
+export var MaxOffset = Vector2(0.04, 0.04)  # Maximum hor/ver shake in pixels.
+export var MaxRoll = 0.125  # Maximum rotation in radians (use sparingly).
 export var TraumaPower = 2 # Trauma exponent. Use [2, 3].
 export var MaxTrauma = 0.75
 

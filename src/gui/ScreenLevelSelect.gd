@@ -1,7 +1,7 @@
 extends Control
 
 export var LevelButton: PackedScene
-export var GameScene: PackedScene
+export var TransitionScene: PackedScene
 
 
 func _ready():
@@ -15,4 +15,5 @@ func _ready():
 		
 func onLevelButtonPressed(button):
 	PlayerData.set("current_level", button.id)
-	get_tree().change_scene_to(GameScene)
+	PlayerData.set("next_scene", "game")
+	get_tree().change_scene_to(TransitionScene)

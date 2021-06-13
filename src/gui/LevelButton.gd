@@ -12,7 +12,14 @@ func setup(level, unlocked):
 	$Lock.visible = not unlocked
 
 func _ready():
-	pass
+	modulate = Color("a7a79e")
 
 func _on_TextureButton_pressed():
 	emit_signal("onPressed", self)
+
+func _on_TextureButton_mouse_entered():
+	if $Lock.visible == false:
+		modulate = Color("e0b94a")
+
+func _on_TextureButton_mouse_exited():
+	modulate = Color("a7a79e")

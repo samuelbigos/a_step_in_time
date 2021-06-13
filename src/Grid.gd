@@ -18,18 +18,20 @@ const KEY_META_MOVES = "M"
 const KEY_MOVE = "m"
 const KEY_META_LEVEL = "l"
 const KEY_META_TIME = "T"
+const KEY_BOT = "@"
+
+var timeMod = 1
 
 var _gridKeys = {}
 var _keyPrio = {}
 var _gridHeight:= 16
 var _gridWidth:= 30
 var _origin: Vector2
+var _time = 0
+var _level
 
 var _gridEntities = {}
 var _gridEntitiesFloor = {}
-
-var _gridEntitiesStack = []
-var _gridEntitiesFloorStack = []
 
 func _ready():
 	_gridKeys[KEY_EMPTY] = null
@@ -62,33 +64,20 @@ func _ready():
 	_keyPrio[12] = KEY_META_TIME
 	_gridKeys[KEY_WATER] = load("res://scenes/entities/EntityWater.tscn")
 	_keyPrio[13] = KEY_WATER
+	_gridKeys[KEY_BOT] = load("res://scenes/entities/EntityBot.tscn")
+	_keyPrio[14] = KEY_BOT
 	
 	var currentLevel = PlayerData.get("current_level")
-	var level = Globals.Levels[currentLevel]
+	_level = Globals.Levels[currentLevel]
 	
-	#_gridHeight = level.size()
-	#_gridWidth = level[0].length()
 	_origin = get_viewport_rect().size * 0.5 - Vector2(_gridWidth, _gridHeight) * 0.5 * GridCellSize
 	_origin += Vector2(GridCellSize, GridCellSize) * 0.5
 	for y in range(0, _gridHeight):
 		for x in range(0, _gridWidth):
 			var gridPos = Vector2(x, y)
-			var key = level[y][x]
+			var key = _level[y][x]
 			addEntity(key, gridPos)
-			
-func _process(delta):
-	if Input.is_action_just_released("undo"):
-		_undo()
-		
-func _undo():
-	if _gridEntitiesStack.size() == 0:
-		return
-		
-#	var lastStack = _gridEntitiesStack.size() - 1
-#	for y in range(0, _gridHeight):
-#		for x in range(0, _gridWidth):
-#			if 
-				
+	
 func addEntity(key, gridPos: Vector2):
 	var entityScene = _gridKeys[key]
 		
@@ -117,9 +106,6 @@ func getKey(level, pos: Vector2):
 	var key = row[pos.x]
 				
 func step():
-	_gridEntitiesStack.append(_gridEntities.duplicate())
-	_gridEntitiesFloorStack.append(_gridEntitiesFloor.duplicate())
-	
 	for y in range(0, _gridHeight):
 		for x in range(0, _gridWidth):
 			var gridPos = Vector2(x, y)
@@ -182,6 +168,50 @@ func step():
 			if entity:
 				entity.stepEnd()
 				
+	# temporal
+	_time += timeMod
+	if timeMod == -1:
+		var tempEntities = _gridEntities.duplicate()
+		for y in range(0, _gridHeight):
+			for x in range(0, _gridWidth):
+				var gridPos = Vector2(x, y)
+				var entity = _gridEntities[gridPos]
+				if is_instance_valid(entity) and entity.Temporal:
+					if entity.positionStack.size() <= 1:
+						entity.destroy()
+					else:
+						entity.positionStack.remove(entity.positionStack.size() - 1)
+						if tempEntities[gridPos] == entity:
+							tempEntities[gridPos] = null
+						var prevPos = entity.positionStack[entity.positionStack.size() - 2]
+						entity._moveFrom = entity.positionStack[entity.positionStack.size() - 1]
+						entity.positionStack.remove(entity.positionStack.size() - 1)
+						entity._gridPos = prevPos
+						entity.updateWorldPos(prevPos)
+						tempEntities[prevPos] = entity
+						
+						entity._moving = true
+						entity._moveTimer = entity.MoveAnimTime
+						
+						if entity.key == KEY_BOT:
+							entity.botMoveStack.remove(entity.botMoveStack.size() - 1)
+							var prevBotMove = entity.botMoveStack[entity.botMoveStack.size() - 2]
+							entity.botMoveStack.remove(entity.botMoveStack.size() - 1)
+							entity._botMove = prevBotMove
+							entity._sprite.flip_h = entity._botMove.x > 0
+						
+		_gridEntities = tempEntities.duplicate()
+		
+	# spawn more water
+	var level = Globals.Levels[PlayerData.get("current_level")]
+	for y in range(0, _gridHeight):
+		for x in range(0, _gridWidth):
+			var gridPos = Vector2(x, y)
+			var key = level[y][x]
+			if key == KEY_WATER and _gridEntities[gridPos] == null:
+				addEntity(key, gridPos)
+	
+
 func _move(entity: Object, gridPos: Vector2, move: Vector2, depth: int) -> bool:
 	if not entity.is_in_group("player"):
 		move.x = sign(move.x)

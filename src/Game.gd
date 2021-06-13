@@ -1,14 +1,18 @@
 extends Node2D
 
+export var TransitionScene:= ""
+
 onready var _grid = get_node("Grid")
 onready var _noise = OpenSimplexNoise.new()
 
 var disableMoves = false
 
 var _restart = false
-var _restartTimer = 1.0
+var _restartTimer = 0.5
 var _joinTimer = 0.0
-
+var _firstFrame = true
+var _completedLevel = false
+var _completeLevelTimer = 0.5
 
 func _init():
 	add_to_group("game")
@@ -22,16 +26,31 @@ func _ready():
 		
 	var moves = get_tree().get_nodes_in_group("move")
 	disableMoves = moves.size() == 0
+	
+	$ElectricSFX.play()
+	
+func playDestroySFX():
+	$DestroySFX.play()
 
 func _process(delta):
+	if _firstFrame:
+		_firstFrame = false
+		GlobalCamera.addTrauma(1.0)
+		
+	if _completedLevel:
+		_completeLevelTimer -= delta
+		if _completeLevelTimer < 0.0:
+			PlayerData.completeCurrentLevel()
+			get_tree().change_scene(TransitionScene)
+		return
+		
 	if _restart:
 		_restartTimer -= delta
 		if _restartTimer < 0.0:
-			pass
-			#get_tree().reload_current_scene()
+			get_tree().change_scene(TransitionScene)
 			
 	if Input.is_action_just_released("restart"):
-		get_tree().reload_current_scene()
+		get_tree().change_scene(TransitionScene)
 			
 	var player = get_tree().get_nodes_in_group("player")
 	if player.size() == 0:
@@ -56,12 +75,13 @@ func _process(delta):
 	update()
 
 func completeLevel():
-	PlayerData.completeCurrentLevel()
-	get_tree().reload_current_scene()
+	_completedLevel = true
+	$FlagSFX.play()
 
 func _draw():
 	var metas = get_tree().get_nodes_in_group("meta")
 	var processed = []
+	var highestIntensity = 0.0
 	for m1 in metas:
 		processed.append(m1)
 		for m2 in metas:
@@ -83,6 +103,9 @@ func _draw():
 			var pointNum = (p1 - p2).length() / segmentLen
 			var points = PoolVector2Array()
 			var intensity = 1.0 - clamp((p2 - p1).length() / 150.0, 0.0, 1.0)
+			
+			highestIntensity = max(highestIntensity, intensity)
+			
 			for i in range(pointNum + 1):
 				var point = p1 + (p2 - p1) * i / pointNum
 				var t = i / pointNum
@@ -90,3 +113,5 @@ func _draw():
 				point += tangent.normalized() * noise * sin(_joinTimer + t * PI * 2.0) * segmentLen * intensity * 3.0
 				points.push_back(point)
 			draw_polyline(points, Color("caa05a"), intensity * 5.0)
+			
+	$ElectricSFX.volume_db = lerp(-100, -15, highestIntensity)

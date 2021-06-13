@@ -1,7 +1,6 @@
 extends EntityBase
 class_name EntityPlayer
 
-var game = null
 
 func _ready():
 	_sprite.animation = "idle"
@@ -65,16 +64,21 @@ func move(newGridPos):
 				EntityMeta.MetaType.Moves:
 					movesDelta += mod
 				EntityMeta.MetaType.Level:
-					if mod != 0:
-						var level = PlayerData.get("current_level") + mod
+					if mod < 0:
+						var level = PlayerData.get("current_level") - 1
 						PlayerData.set("current_level", level)
-						PlayerData.set("unlocked_level", max(level, PlayerData.get("unlocked_level")))
 						SaveManager.do_save()
-						get_tree().reload_current_scene()
+						get_tree().change_scene("res://scenes/gui/ScreenTransition.tscn")
+					elif mod > 0:
+						game.completeLevel()
+						
 				EntityMeta.MetaType.Time:
-					pass
-					
-	if heartDelta > 0:
+					grid.timeMod = mod
+			
+	if movesDelta > 0 or heartDelta > 0:
+		$AddHeartSFX.play()
+				
+	if heartDelta > 0:		
 		while heartDelta != 0:
 			addHeart()
 			heartDelta -= 1
@@ -105,7 +109,9 @@ func move(newGridPos):
 	if health == 0:
 		destroy()
 		
-	GlobalCamera.addTrauma(0.44)
+	GlobalCamera.addTrauma(0.33)
+	if moveDelta != Vector2():
+		$MoveSFX.play()
 		
 func removeMove():
 	var moves = get_tree().get_nodes_in_group("move")

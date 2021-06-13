@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/destroyed.wav-683d8b3de88e8b20e96c2b7a633a8020.sample"
+
+[deps]
+
+source_file="res://assets/sfx/destroyed.wav"
+dest_files=[ "res://.import/destroyed.wav-683d8b3de88e8b20e96c2b7a633a8020.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

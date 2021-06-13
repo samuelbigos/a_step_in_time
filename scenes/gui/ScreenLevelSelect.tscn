@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/gui/LevelButton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/gui/ScreenLevelSelect.gd" type="Script" id=2]
-[ext_resource path="res://scenes/Game.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/gui/ScreenTransition.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/gui/CRT.tscn" type="PackedScene" id=4]
 
 [node name="LevelSelect" type="Control"]
@@ -14,7 +14,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 LevelButton = ExtResource( 1 )
-GameScene = ExtResource( 3 )
+TransitionScene = ExtResource( 3 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 anchor_right = 1.0

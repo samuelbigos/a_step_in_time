@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/block.png" type="Texture" id=1]
 [ext_resource path="res://src/entities/EntityMetaLevel.gd" type="Script" id=2]
 [ext_resource path="res://assets/font/monogram.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://scenes/gui/ScreenTransition.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 3 )
@@ -10,6 +11,7 @@ font_data = ExtResource( 3 )
 [node name="EntityMetaLevel" type="Area2D"]
 script = ExtResource( 2 )
 metaType = 5
+TransitionScene = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -24,3 +26,7 @@ text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="input_event" from="." to="." method="_on_EntityMetaLevel_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_EntityMetaLevel_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_EntityMetaLevel_mouse_exited"]
