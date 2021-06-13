@@ -71,6 +71,10 @@ func _ready():
 	_keyPrio[15] = KEY_COMPASS
 	
 	var currentLevel = PlayerData.get("current_level")
+	if currentLevel >= Globals.Levels.size():
+		get_tree().change_scene("res://scenes/gui/ScreenLevelSelect.tscn")
+		return
+		 
 	_level = Globals.Levels[currentLevel]
 	
 	_origin = get_viewport_rect().size * 0.5 - Vector2(_gridWidth, _gridHeight) * 0.5 * GridCellSize

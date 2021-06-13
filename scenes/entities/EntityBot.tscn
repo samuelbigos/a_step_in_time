@@ -36,6 +36,6 @@ CanMove = true
 Temporal = true
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
+z_index = 1
 frames = SubResource( 5 )
-frame = 1
 playing = true
