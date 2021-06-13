@@ -19,7 +19,7 @@ region = Rect2( 32, 0, 16, 16 )
 atlas = ExtResource( 2 )
 region = Rect2( 48, 0, 16, 16 )
 
-[sub_resource type="SpriteFrames" id=7]
+[sub_resource type="SpriteFrames" id=5]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
@@ -30,12 +30,12 @@ animations = [ {
 [node name="EntityBot" type="Area2D" groups=[
 "wall",
 ]]
-modulate = Color( 0.654902, 0.654902, 0.619608, 1 )
+modulate = Color( 0.788235, 0.8, 0.631373, 1 )
 script = ExtResource( 1 )
 CanMove = true
 Temporal = true
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-frames = SubResource( 7 )
-frame = 3
+frames = SubResource( 5 )
+frame = 1
 playing = true

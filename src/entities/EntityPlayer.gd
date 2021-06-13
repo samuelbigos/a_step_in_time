@@ -77,6 +77,9 @@ func move(newGridPos):
 			
 	if movesDelta > 0 or heartDelta > 0:
 		$AddHeartSFX.play()
+		
+	if heartDelta < 0:
+		$HurtSFX.play()
 				
 	if heartDelta > 0:		
 		while heartDelta != 0:

@@ -6,6 +6,7 @@
 [node name="EntityBlock" type="Area2D"]
 script = ExtResource( 2 )
 CanMove = true
+Temporal = true
 
 [node name="Sprite" type="Sprite" parent="."]
 self_modulate = Color( 0.788235, 0.8, 0.631373, 1 )

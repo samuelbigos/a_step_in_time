@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/font/fibberish.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/gui/level_button.png" type="Texture" id=2]
 [ext_resource path="res://src/gui/LevelButton.gd" type="Script" id=3]
 [ext_resource path="res://assets/gui/level_lock.png" type="Texture" id=4]
+[ext_resource path="res://assets/gui/level_skipped.png" type="Texture" id=5]
+[ext_resource path="res://assets/gui/level_complete.png" type="Texture" id=6]
 
 [node name="TextureButton" type="TextureButton"]
 margin_right = 32.0
@@ -15,6 +17,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="."]
+visible = false
 margin_left = -1.0
 margin_top = 1.0
 margin_right = 31.0
@@ -31,9 +34,28 @@ __meta__ = {
 }
 
 [node name="Lock" type="TextureRect" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Skipped" type="TextureRect" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Complete" type="TextureRect" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

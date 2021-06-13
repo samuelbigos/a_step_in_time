@@ -96,7 +96,6 @@ GlobalCamera="*res://src/singletons/Camera.gd"
 
 window/size/width=480
 window/size/height=256
-window/size/borderless=true
 window/size/test_width=960
 window/size/test_height=512
 window/stretch/mode="viewport"

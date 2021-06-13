@@ -26,7 +26,7 @@ func _ready():
 	modulate = _baseCol
 	add_child(_sfxConnect)
 	_sfxConnect.stream = load("res://assets/sfx/on_connected.wav")
-	_sfxConnect.volume_db = -10
+	_sfxConnect.volume_db = -15	
 
 func _process(delta):
 	if connectedTo.size() > 0:

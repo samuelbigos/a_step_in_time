@@ -1,15 +1,21 @@
 extends TextureButton
 
 var id = -1
+var state = 0
 
 signal onPressed
 
 
-func setup(level, unlocked):
+func setup(level, inState):
 	id = level
-	$Label.text = "%d" % (level + 1)
-	$Label.visible = unlocked
-	$Lock.visible = not unlocked
+	state = inState
+	match state:
+		0: $Lock.visible = true
+		1: $Label.visible = true
+		2: $Skipped.visible = true
+		3: $Complete.visible = true
+		
+	$Label.text = "%d" % (id + 1)
 
 func _ready():
 	modulate = Color("a7a79e")

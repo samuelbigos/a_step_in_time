@@ -106,12 +106,16 @@ func _draw():
 			
 			highestIntensity = max(highestIntensity, intensity)
 			
+			var col = Color("caa05a")
+			if m1.connectedTo.has(m2) or m2.connectedTo.has(m1):
+				col = Color.white
+			
 			for i in range(pointNum + 1):
 				var point = p1 + (p2 - p1) * i / pointNum
 				var t = i / pointNum
 				var noise = _noise.get_noise_2d(_joinTimer, t * 50.0)
 				point += tangent.normalized() * noise * sin(_joinTimer + t * PI * 2.0) * segmentLen * intensity * 3.0
 				points.push_back(point)
-			draw_polyline(points, Color("caa05a"), intensity * 5.0)
+			draw_polyline(points, col, intensity * 5.0)
 			
-	$ElectricSFX.volume_db = lerp(-100, -15, highestIntensity)
+	$ElectricSFX.volume_db = lerp(-100, -25, highestIntensity)
