@@ -9,4 +9,5 @@ Traversible = true
 Damage = 1
 
 [node name="Sprite" type="Sprite" parent="."]
+self_modulate = Color( 0.788235, 0.505882, 0.294118, 1 )
 texture = ExtResource( 2 )

@@ -1,5 +1,5 @@
 extends EntityBase
-class_name EntityBlock
+class_name EntityHeart
 
 
 func _ready():

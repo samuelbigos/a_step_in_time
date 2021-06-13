@@ -3,8 +3,11 @@
 [ext_resource path="res://assets/wall.png" type="Texture" id=1]
 [ext_resource path="res://src/entities/EntityWall.gd" type="Script" id=2]
 
-[node name="EntityWall" type="Area2D"]
+[node name="EntityWall" type="Area2D" groups=[
+"wall",
+]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+self_modulate = Color( 0.607843, 0.411765, 0.439216, 1 )
 texture = ExtResource( 1 )

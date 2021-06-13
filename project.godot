@@ -20,9 +20,19 @@ _global_script_classes=[ {
 "path": "res://src/entities/EntityBlock.gd"
 }, {
 "base": "EntityBase",
+"class": "EntityHeart",
+"language": "GDScript",
+"path": "res://src/entities/EntityHeart.gd"
+}, {
+"base": "EntityBase",
 "class": "EntityMeta",
 "language": "GDScript",
 "path": "res://src/entities/EntityMeta.gd"
+}, {
+"base": "EntityMeta",
+"class": "EntityMetaLevel",
+"language": "GDScript",
+"path": "res://src/entities/EntityMetaLevel.gd"
 }, {
 "base": "EntityBase",
 "class": "EntityPlayer",
@@ -33,6 +43,11 @@ _global_script_classes=[ {
 "class": "EntityWall",
 "language": "GDScript",
 "path": "res://src/entities/EntityWall.gd"
+}, {
+"base": "EntityBase",
+"class": "EntityWater",
+"language": "GDScript",
+"path": "res://src/entities/EntityWater.gd"
 }, {
 "base": "Node2D",
 "class": "Grid",
@@ -47,9 +62,12 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "EntityBase": "",
 "EntityBlock": "",
+"EntityHeart": "",
 "EntityMeta": "",
+"EntityMetaLevel": "",
 "EntityPlayer": "",
 "EntityWall": "",
+"EntityWater": "",
 "Grid": "",
 "SaveGame": ""
 }
@@ -66,14 +84,39 @@ config/save_version=0
 SaveManager="*res://src/SaveManager.gd"
 PlayerData="*res://src/PlayerData.gd"
 Globals="*res://src/Globals.gd"
+GlobalCamera="*res://src/singletons/Camera.gd"
 
 [display]
 
 window/size/width=480
 window/size/height=256
+window/size/borderless=true
 window/size/test_width=960
 window/size/test_height=512
 window/stretch/mode="viewport"
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": true,
+"flags/anisotropic": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": true,
+"process/invert_color": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 1.0
+}
 
 [input]
 
@@ -101,7 +144,22 @@ right={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
  ]
 }
+restart={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777220,"unicode":0,"echo":false,"script":null)
+ ]
+}
+undo={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":90,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [physics]
 
 common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_clear_color=Color( 0.145098, 0.129412, 0.12549, 1 )

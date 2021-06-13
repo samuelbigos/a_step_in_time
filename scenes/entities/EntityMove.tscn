@@ -1,12 +1,15 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/block.png" type="Texture" id=1]
+[ext_resource path="res://assets/move.png" type="Texture" id=1]
 [ext_resource path="res://src/entities/EntityBlock.gd" type="Script" id=2]
 
-[node name="EntityBlock" type="Area2D"]
+[node name="EntityMove" type="Area2D" groups=[
+"move",
+]]
 script = ExtResource( 2 )
 CanMove = true
+Animate = true
 
 [node name="Sprite" type="Sprite" parent="."]
-self_modulate = Color( 0.788235, 0.8, 0.631373, 1 )
+self_modulate = Color( 0.788235, 0.505882, 0.294118, 1 )
 texture = ExtResource( 1 )

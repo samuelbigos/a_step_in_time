@@ -6,19 +6,33 @@ enum MetaType {
 	Y,
 	Health,
 	Time,
-	Moves
+	Moves,
+	Level
 }
 
 export var metaType = MetaType.X
 
 var connectedTo = []
 
+var _baseCol = Color("a7a79e")
+var _activeCol = Color("caa05a")
+var _shakeTimer = 0.0
+
 
 func _ready():
 	add_to_group("meta")
+	modulate = _baseCol
 
 func _process(delta):
-	pass
+	if connectedTo.size() > 0:
+		_shakeTimer += delta * 25.0		
+		var s = sin(_shakeTimer) * 0.1 + 1.0
+		_sprite.scale = Vector2(s, s)
+		_sprite.rotation = sin(_shakeTimer * 2.0) * 0.125
+	else:
+		var s = 1.0
+		_sprite.scale = Vector2(s, s)
+		_sprite.rotation = 0.0
 	
 func stepEnd():
 	.stepEnd()
@@ -32,6 +46,6 @@ func stepEnd():
 			connectedTo.append(n)
 
 	if connectedTo.size() > 0:
-		modulate = Color.yellow
+		modulate = _activeCol
 	else:
-		modulate = Color.white
+		modulate = _baseCol

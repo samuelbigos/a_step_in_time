@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/block_health.png" type="Texture" id=1]
-[ext_resource path="res://src/entities/EntityBlock.gd" type="Script" id=2]
+[ext_resource path="res://src/entities/EntityHeart.gd" type="Script" id=2]
 
 [node name="EntityHeart" type="Area2D" groups=[
 "heart",
 ]]
 script = ExtResource( 2 )
-CanMove = true
 
 [node name="Sprite" type="Sprite" parent="."]
+self_modulate = Color( 0.811765, 0.415686, 0.309804, 1 )
 texture = ExtResource( 1 )
