@@ -19,6 +19,7 @@ const KEY_MOVE = "m"
 const KEY_META_LEVEL = "l"
 const KEY_META_TIME = "T"
 const KEY_BOT = "@"
+const KEY_COMPASS = "^"
 
 var timeMod = 1
 
@@ -66,6 +67,8 @@ func _ready():
 	_keyPrio[13] = KEY_WATER
 	_gridKeys[KEY_BOT] = load("res://scenes/entities/EntityBot.tscn")
 	_keyPrio[14] = KEY_BOT
+	_gridKeys[KEY_COMPASS] = load("res://scenes/entities/EntityCompass.tscn")
+	_keyPrio[15] = KEY_COMPASS
 	
 	var currentLevel = PlayerData.get("current_level")
 	_level = Globals.Levels[currentLevel]

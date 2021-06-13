@@ -21,8 +21,6 @@ func _ready():
 	_noise.seed = randi()
 	_noise.period = 4
 	_noise.octaves = 2
-	if PlayerData.get("current_level") > 0:
-		$CanvasLayer/Axis.visible = true
 		
 	var moves = get_tree().get_nodes_in_group("move")
 	disableMoves = moves.size() == 0

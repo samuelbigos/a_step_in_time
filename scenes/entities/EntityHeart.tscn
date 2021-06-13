@@ -7,7 +7,9 @@
 "heart",
 ]]
 script = ExtResource( 2 )
+CanMove = true
 
 [node name="Sprite" type="Sprite" parent="."]
 self_modulate = Color( 0.811765, 0.415686, 0.309804, 1 )
+z_index = 1
 texture = ExtResource( 1 )

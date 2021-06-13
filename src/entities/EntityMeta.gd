@@ -27,6 +27,7 @@ func _ready():
 	add_child(_sfxConnect)
 	_sfxConnect.stream = load("res://assets/sfx/on_connected.wav")
 	_sfxConnect.volume_db = -15	
+	z_index = 1
 
 func _process(delta):
 	if connectedTo.size() > 0:
