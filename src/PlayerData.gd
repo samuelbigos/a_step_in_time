@@ -20,8 +20,8 @@ func _do_create_new():
 	_data["furthest_level"] = 0
 	_data["level_state"] = []
 	for i in range(100):
-		#_data["level_state"].append(LevelState.Unlocked)
-		_data["level_state"].append(LevelState.Locked)
+		_data["level_state"].append(LevelState.Unlocked)
+		#_data["level_state"].append(LevelState.Locked)
 	_data["level_state"][0] = 1
 	_data["keys"] = 3
 	_data["next_screen"] = "game"
@@ -59,4 +59,4 @@ func do_save():
 	
 func do_load(save_data : Dictionary):
 	_do_create_new()
-	_data = save_data["data"].duplicate(true)
+	#_data = save_data["data"].duplicate(true)
